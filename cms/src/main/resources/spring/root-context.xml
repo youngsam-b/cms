@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<mvc:annotation-driven />
+		
+	<!--  application load listener will scan and load com.cms.app level package -->
+	<context:component-scan base-package="com.cms.app"/>
+	
+	<!-- import database setting -->
+    <import resource="classpath:db/datasource-config.xml"/>
+
+	<!--Custom Exception Hanlder -->
+	    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+        	<props>
+        		<prop key="com.cms.app.exception.CustomExcetpion">
+        		error
+        		</prop>
+        	</props>
+        </property>       
+    	</bean>
+    <!--//Custom Exception Hanlder -->
+
+    <!--  multipartfile upload -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <!-- one of the properties available; the maximum file size in bytes -->
+    <property name="maxUploadSize" value="1000000"/>
+	</bean>
+    <!-- // multipartfile upload -->         
+    
+</beans>

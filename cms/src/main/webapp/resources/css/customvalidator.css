@@ -1,0 +1,16 @@
+﻿span.arrow {    
+/* 
+	height:17px;
+    background: url('http://i45.tinypic.com/f9ifz6.png') no-repeat left center;
+	margin-left: 6px;
+	 */    
+}
+
+label.error 
+{                    
+    color:Red;    
+    height:17px;
+    font-size:small;   
+}
+
+
