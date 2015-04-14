@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.cms.app.exception.CustomException;
 import com.cms.app.model.User;
@@ -77,6 +78,25 @@ public class UserController {
 		return "forward:success";
 	}
 
+	@RequestMapping(value = "/update", method = RequestMethod.GET)
+	public ModelAndView getUpdate(HttpServletRequest req,ModelAndView mav) throws CustomException{
+		HttpSession session=req.getSession();		
+		mav.addObject(session.getAttribute("user"));
+		mav.setViewName("update");
+		return mav;
+	}
+	
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String update(@ModelAttribute User user) throws CustomException{
+		
+		try{
+		cmsService.register(user);		
+		}catch(RuntimeException ex){
+			throw new CustomException(user,ex);
+		}		
+		
+		return "update";
+	}
 	@RequestMapping(value = "/signin", method = RequestMethod.GET)
 	public String getSignin() throws CustomException {
 		return "signin";
