@@ -2,7 +2,12 @@ package com.cms.web.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cms.app.exception.CustomException;
 import com.cms.app.util.CommonUtil;
 import com.cms.app.util.FileUploadResponse;
+import com.cms.app.util.ImageUtil;
 
 
 @Controller
@@ -30,6 +36,8 @@ public class FileUploadController {
 	private String iconpath;
 	@Value("${upload.imagepath}")
 	private String imagepath;
+	@Value("${upload.sizelimit}")
+	private long sizelimit;
 
 	@Autowired
 	private FileUploadResponse uploadResponse;
@@ -41,6 +49,11 @@ public class FileUploadController {
 	AsyncUploadFile(HttpServletRequest request,
 					@RequestParam("file")MultipartFile multipartFile
 					){
+	if(multipartFile.getSize()>sizelimit)
+	  		return null;
+		   
+	if(!ImageUtil.isImageContent(multipartFile))
+		   return null;
 		
 	ServletContext servletContext=request.getSession().getServletContext();
 	StringBuilder sb= new StringBuilder(servletContext.getRealPath(uploadpath));
@@ -71,7 +84,15 @@ public class FileUploadController {
 			    @RequestParam("CKEditor") String CKEditor,
 			    @RequestParam(value="upload")MultipartFile multipartFile
 			    ){
-			
+		
+		
+	   if(multipartFile.getSize()>sizelimit)
+	   		
+		   return "<script>window.parent.CKEDITOR.tools.callFunction(0,null,'fize size limit 1MB')</script>";
+	   
+	   if(!ImageUtil.isImageContent(multipartFile))
+		   return "<script>window.parent.CKEDITOR.tools.callFunction(0,null,'this is not a image type file')</script>";
+	   
 		ServletContext servletContext=request.getSession().getServletContext();
 		StringBuilder sb= new StringBuilder(servletContext.getRealPath(uploadpath));
 		sb.append(File.separator).append(imagepath);

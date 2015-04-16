@@ -59,7 +59,8 @@ public class CommonUtil {
 		   
    if (!file.exists())  
 	    file.createNewFile();
-		  
+	
+ 
 		 
   
 	outputStream = new FileOutputStream(file);  
@@ -72,14 +73,14 @@ public class CommonUtil {
 		   
 	outputStream.close();
 	inputStream.close();		   
-		  	
+	/*	  	
     ImageUtil.checkImageWidth(
     						  path+
     						  File.separator+
     						  file.getName(),
     						  true
     						  );
-    
+    */						  
 	return file.getName();
     }
 	

@@ -6,10 +6,14 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.cms.app.exception.CustomException;
 
 
 public class ImageUtil {
@@ -55,5 +59,19 @@ public class ImageUtil {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	 }		
+	 }
+	 
+	 public static boolean isImageContent(MultipartFile multipartFile) {
+		   try (InputStream input = multipartFile.getInputStream()) {
+			    try {
+			   return ImageIO.read(input)!=null;
+			    } catch (Exception ex) {
+			    	return false;
+			    }
+		   } catch (IOException ex) {
+
+			   throw new CustomException(ex,null);
+	    	}		 
+		   
+	 }
 }
