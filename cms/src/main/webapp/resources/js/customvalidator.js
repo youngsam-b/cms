@@ -25,13 +25,16 @@
         {
             setupFormValidation: function () {
                 $('#registerForm').validate({
-                    onkeyup: false,
-                    onclick: false,
 
                     rules: {
 
                         email: { required: true,
                                  email: true
+                        },
+                        username:{
+                        	required:true,
+                        	minlength: 6,
+                        	hasSpecialCharacters:true
                         },
                         pwd: { required: true,
                                minlength: 6
@@ -43,8 +46,13 @@
                         
                     },
                     messages: {
-                        	email: { required: "Please enter your email",
+                       	email: { required: "Please enter your email",
                         			email: "Email Address is not valid" 
+                        },
+                        username:{
+                        	required:"Please enter your name",
+                        	hasSpecialCharacters:"Special Character Cannot be entered here",
+                        	minlength: "type minimum 6 characters"
                         },
                         pwd: { required: "Please enter your password",
                             minlength: "Minimum 6 characters required"

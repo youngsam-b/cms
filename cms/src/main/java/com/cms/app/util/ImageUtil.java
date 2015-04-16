@@ -13,8 +13,10 @@ import org.apache.commons.io.FilenameUtils;
 
 
 public class ImageUtil {
-		
-	 public static final int MaxWidth=630;
+	
+	 public static final int iconMaxWidth=150;
+	 public static final int articleMaxWidth=600;
+	
 	 
 	 public static BufferedImage resizeImageWithHint(BufferedImage originalImage, int maxwidth,int newHeight){
 		 
@@ -34,12 +36,16 @@ public class ImageUtil {
 			return resizedImage;
 		    }	
 	 
-	 public static void checkImageWidth(String path){
+	 public static void checkImageWidth(String path,boolean isIcon){
 		 try {
 			BufferedImage originalImage = ImageIO.read(new File(path));
-			int width=originalImage.getWidth();
+			int width=originalImage.getWidth();			
 			int height=originalImage.getHeight();
+			int MaxWidth=articleMaxWidth;
 			
+			if(isIcon)
+				MaxWidth=iconMaxWidth;
+				
 			if(width>MaxWidth){
 				int newHeight=((height*MaxWidth)/width);
 				BufferedImage bi=resizeImageWithHint(originalImage, MaxWidth, newHeight);

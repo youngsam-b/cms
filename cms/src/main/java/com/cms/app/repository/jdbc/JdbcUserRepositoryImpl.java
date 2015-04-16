@@ -32,6 +32,7 @@ public class JdbcUserRepositoryImpl implements UserRepository{
     	                    .usingGeneratedKeyColumns("id")
     	                    .usingColumns("email"
     	                    			  ,"pwd"
+    	                    			  ,"username"
     	                    			  ,"roleId"
     	                    			  ,"icon"
     	                    			  ,"activated"
@@ -46,13 +47,18 @@ public class JdbcUserRepositoryImpl implements UserRepository{
 	}
 
 	@Override
-	public boolean update(User u) {
-		// TODO Auto-generated method stub
-		return false;
+	public int update(User user) {
+		String sql="UPDATE user SET icon=:icon WHERE id=:id";
+		Map<String,Object> hmap = new HashMap<String,Object>();
+		
+		hmap.put("icon",user.getIcon());
+		hmap.put("id",user.getId());
+		
+	    return namedParameterJdbcTemplate.update(sql, hmap);
 	}
 
 	@Override
-	public User signIn(String email, String pwd) {
+	public User getUser(String email, String pwd) {
 
 		try{
 		String sql="SELECT * FROM user WHERE email=:email AND pwd=:pwd AND activated=true AND banned=false";
@@ -66,12 +72,7 @@ public class JdbcUserRepositoryImpl implements UserRepository{
 		}
 	}
 
-	@Override
-	public boolean signOut(User u) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	
 	@Override
 	public boolean isExist(String email) {
 		String sql="SELECT count(*) FROM user WHERE email=:email";
@@ -90,5 +91,32 @@ public class JdbcUserRepositoryImpl implements UserRepository{
 		hmap.put("str",str);
 		return namedParameterJdbcTemplate.update(sql, hmap)==1;		
 	}
+
+	@Override
+	public User getUserbyEmail(String email) {
+		try{
+			String sql="SELECT * FROM user WHERE email=:email";
+			Map<String,Object> hmap=new HashMap<String, Object>();
+			hmap.put("email",email);			
+			return namedParameterJdbcTemplate.queryForObject(sql, hmap,new UserMapper());
+			
+			}catch(EmptyResultDataAccessException ex){
+				return null;				
+			}
+	}
+
+	@Override
+	public User getUserbyId(int id) {
+		try{
+			String sql="SELECT * FROM user WHERE id=:id";
+			Map<String,Object> hmap=new HashMap<String, Object>();
+			hmap.put("id",id);			
+			return namedParameterJdbcTemplate.queryForObject(sql, hmap,new UserMapper());
+			
+			}catch(EmptyResultDataAccessException ex){
+				return null;				
+			}
+	}
+	
 
 }

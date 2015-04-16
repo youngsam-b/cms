@@ -7,10 +7,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -34,7 +36,7 @@ public class CommonUtil {
 		return "redirect:"+url.getPath();
 	}
 
-	public static String saveUploadedFile(String path,MultipartFile multipartFile) throws IOException {
+	public static String saveUploadedFile(String path,MultipartFile multipartFile,boolean isIcon) throws IOException {
 	
 	File file=null;
 	OutputStream outputStream=null;
@@ -74,7 +76,8 @@ public class CommonUtil {
     ImageUtil.checkImageWidth(
     						  path+
     						  File.separator+
-    						  file.getName()
+    						  file.getName(),
+    						  true
     						  );
     
 	return file.getName();
@@ -113,4 +116,14 @@ public class CommonUtil {
 			 }
 		 }     		 		 
 	 }
+	 
+	 public static void updateSession(HttpSession session,String attr,Object o){
+		 if(session.getAttribute(attr)==null)
+			 return;
+		 
+		 session.invalidate();
+		 session.setAttribute(attr, o);
+	 }
+	 
+	
 }

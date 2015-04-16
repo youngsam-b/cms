@@ -3,10 +3,12 @@ package com.cms.web.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,7 +33,7 @@ public class UserController {
 		
 	
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String getRegister(@ModelAttribute User user) throws CustomException {
+	public String getRegister(@ModelAttribute User user)  {
 		return "register";
 	}
 		
@@ -40,17 +42,19 @@ public class UserController {
 						   @RequestParam("str") String str
 			               ) throws CustomException {
 		
+		
 		if(email==null || str==null)
 			return "/";
 		
-		if(cmsService.activate(email, str))
+							
+		if(cmsService.activate(email,str))
 			return "activate";
 		else
 			throw new CustomException(null,new CustomException());		
 	}
 	
 	@RequestMapping(value = "/success", method = RequestMethod.POST)
-	public String success(@ModelAttribute User user) throws CustomException {
+	public String success(@ModelAttribute User user) {
 		try{			
 			//emailUtil.send(user.getEmail(), user.getStr());		
 			}catch(RuntimeException ex){
@@ -67,7 +71,14 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String register(@ModelAttribute User user) throws CustomException{
+	public String register(@Valid @ModelAttribute User user, 
+			               BindingResult result
+			) {
+		
+		if(result.hasErrors())
+			return "register";
+		
+		
 		user.setStr(RandomStringUtils.randomAlphabetic(10));
 		try{
 		cmsService.register(user);		
@@ -75,22 +86,36 @@ public class UserController {
 			throw new CustomException(user,ex);
 		}		
 		
-		return "forward:success";
+		return "success";
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public ModelAndView getUpdate(HttpServletRequest req,ModelAndView mav) throws CustomException{
-		HttpSession session=req.getSession();		
-		mav.addObject(session.getAttribute("user"));
-		mav.setViewName("update");
+	public ModelAndView getUpdate(HttpServletRequest req,ModelAndView mav,BindingResult result) {
+		
+
+		try{
+		User user=(User)req.getSession().getAttribute("user");
+		user=cmsService.getUserbyEmail(user.getEmail());
+		mav.addObject(user);
+		if(result.hasErrors())
+			mav.setViewName("update");
+		else
+			mav.setViewName("signin");
+		
 		return mav;
+		}catch(RuntimeException ex){
+			throw new CustomException(null,ex);
+		}
 	}
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(@ModelAttribute User user) throws CustomException{
+	public String update(@Valid @ModelAttribute User user,HttpServletRequest req) {
 		
 		try{
-		cmsService.register(user);		
+		int id=((User)req.getSession().getAttribute("user")).getId();
+		user.setId(id);
+		cmsService.update(user);		
+		
 		}catch(RuntimeException ex){
 			throw new CustomException(user,ex);
 		}		
@@ -112,6 +137,7 @@ public class UserController {
     							HttpServletResponse response		
     							
     		)  {
+    	
     	
     	String returnUrl="";
     	try{
@@ -161,4 +187,30 @@ public class UserController {
 	
 	return "/";
 	}    
+	
+	
+	
+	@RequestMapping(value = "/forget", method = RequestMethod.GET)
+	public String getForget() throws CustomException {
+		return "forget";
+	}
+
+    @RequestMapping(value = "/forget", method = {RequestMethod.POST} )
+    public String forget(@RequestParam(value="email") String email,ModelAndView mav)  {    	
+    	
+    	try{
+    		User u=cmsService.getUserbyEmail(email);
+    		
+    		if(u==null)
+    			return "redirect:/forget?auth=fail";
+    		//else
+    		//emailUtil.sendPwd(u.getEmail(),u.getPwd());
+    		
+    	}catch(RuntimeException ex){
+    		throw new CustomException(null,ex);
+    	}
+		
+    	return "forgetSuccess"; 													
+    }
+
 }

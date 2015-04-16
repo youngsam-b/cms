@@ -19,30 +19,32 @@ public class CmsServiceImpl implements CmsService {
 
 	@Override
 	public User signIn(String email, String pwd) {
-		return ur.signIn(email, pwd);
+		return ur.getUser(email, pwd);
 	}
 
 	@Override
-	public boolean update(User u) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean signOut(User u) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean update(User user) { 
+		return ur.update(user)==1;
 	}
 
 	@Override
 	public boolean isExist(String email) {
-		// TODO Auto-generated method stub
 		return ur.isExist(email);
 	}
 	
 	@Override
 	public boolean activate(String email,String str){
 		return ur.activate(email, str);
+	}
+
+	@Override
+	public User getUserbyEmail(String email) {
+		return ur.getUserbyEmail(email);
+	}
+
+	@Override
+	public User getUserbyId(int id) {
+		return ur.getUserbyId(id);
 	}
 	
 	

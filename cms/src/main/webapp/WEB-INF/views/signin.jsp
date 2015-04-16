@@ -22,16 +22,45 @@
 	<!-- jquery validate -->
 	<script src="<c:url value='/resources/js/jquery.validate.min.js' />"></script>
 	<script src="<c:url value='/resources/js/jquery.form.min.js' />"></script>
-	<script src="<c:url value='/resources/js/customvalidator.js' />"></script>
 	<link href="<c:url value='/resources/css/customvalidator.css' />" rel="stylesheet">
 	<!--// jquery validate -->
 	
 	<script type="text/javascript">
-		$(document).ready(function(){
-			if(location.href.indexOf('auth=fail')>0){	
-				alert('Invalid email or password');
-			}
-		});
+	if(location.href.indexOf('auth=fail')>0){	
+		alert('Invalid email or password');
+	}
+
+	$(document).ready(function(){
+		
+	
+		$('#signinForm').validate({
+	
+	            rules: {
+	                email: { required: true,
+	                         email: true
+	                },
+	                pwd: { required: true,
+	                       minlength: 6
+	                }                
+	            },
+	            messages: {
+	               	email: { required: "Please enter your email",
+	                			email: "Email Address is not valid" 
+	                },
+	                pwd: { required: "Please enter your password",
+	                    minlength: "Minimum 6 characters required"
+	                }                
+	            },
+	            submitHandler: function (form) {          
+	                form.submit();
+	            },
+	            errorPlacement: function (label, element) {
+	                label.addClass('arrow');
+	                label.insertAfter(element);
+	            }
+	            ,wrapper: 'span'
+	        });
+	});		
 	</script>
 </head>
 

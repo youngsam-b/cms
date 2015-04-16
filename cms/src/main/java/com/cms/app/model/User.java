@@ -1,19 +1,35 @@
 package com.cms.app.model;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Range;
+
 
 
 public class User{
 
 
-	int id;
-	String email;
-	String pwd;
-	int roleId;	
-	String icon;
-	boolean activated=false;
+	@NotNull	
+	private int id;
+	@NotNull
+	@Email
+	private String email;
+	@NotNull
+	@Min(6)
+	private String pwd;
+	@NotNull
+	@Pattern(regexp = "^[A-Za-z0-9]+$")
+	private String username;
+	@Range(min=0,max=9)
+	private int roleId;		
+	String icon;	
+	private boolean activated=false;
 	String str;	
-	int warn=0;
-	boolean banned=false;
+	private int warn=0;
+	private boolean banned=false;
 	
 	public User(){
 	}
@@ -33,6 +49,13 @@ public class User{
 	public String getPwd() {
 		return pwd;
 	}
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}	
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}

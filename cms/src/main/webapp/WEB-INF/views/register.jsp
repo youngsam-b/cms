@@ -23,14 +23,14 @@
 	<script src="<c:url value='/resources/js/jquery.validate.min.js' />"></script>
 	<script src="<c:url value='/resources/js/jquery.form.min.js' />"></script>
 	<script src="<c:url value='/resources/js/customvalidator.js' />"></script>
-	<link href="<c:url value='/resources/css/customvalidator.css' />" rel="stylesheet">
+	<link href="<c:url value='/resources/css/customvalidator.css' />" rel="stylesheet"> 
 	<!--// jquery validate -->
 	
 	<script type="text/javascript">
 		function ajaxupload(){	
 		$("#fileUploadform").ajaxForm({
 		 
-		 data : {"subfolder":"icon","isSE":"false"},
+		 data : {"subfolder":"icon"},
 		 dataType: "json",
 		 success:function(data) {		
 			 $('#icon').val(data.hiddenpath);	
@@ -64,6 +64,10 @@
 	    	<label id="label_email">Email</label>
 	        <input  name="email"  type="text"/>
 	    </div>
+		<div>
+	    	<label id="label_email">Name</label>
+	        <input  name="username"  type="text"/>
+	    </div>	    
 	    <div>
 	    	<label>Password</label>
 	        <input name="pwd"  type="password"/>	                    
@@ -87,7 +91,7 @@
 	</div>
 	<hr>
     <div id="2">
-	<form:form id="fileUploadform" method="post" action="asyncfileupload" enctype="multipart/form-data">
+	<form:form id="fileUploadform" method="post" action="iconupload" enctype="multipart/form-data">
 		<div>
 			<input type="file" name="file"  />
 		</div>

@@ -49,14 +49,7 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   <!--// UTF-8 encoding -->  
-  
-  <!-- html escape  -->
-  <context-param>
-    <param-name>defaultHtmlEscape</param-name>
-    <param-value>true</param-value>
-  </context-param>
-  <!--// html escape  -->
-  
+    
   <!-- 404 page -->
   <error-page>
     <error-code>404</error-code>
@@ -70,4 +63,30 @@
   </session-config>
   <!--// Session timeout -->
   
+    <!-- html escape  for output-->
+  <!-- 
+  <context-param>
+    <param-name>defaultHtmlEscape</param-name>
+    <param-value>true</param-value>
+  </context-param>
+   -->
+  <!--// html escape  for output-->
+  
+  <!--  XSS Filter -->
+  <!-- 
+	<filter>
+		<filter-name>XSSFilter</filter-name>
+		<filter-class>com.cms.app.util.XSSFilter</filter-class>	
+		<init-param>
+			<param-name>my-param</param-name>
+			<param-value>my-param-value</param-value>
+		</init-param>		
+	</filter>
+	<filter-mapping>
+		<filter-name>XSSFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+  -->
+<!--//  XSS Filter -->	  
+
 </web-app>

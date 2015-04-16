@@ -12,6 +12,7 @@ public class UserMapper implements RowMapper<User>  {
 	        return new MapSqlParameterSource()
   				        .addValue("email",user.getEmail())
 	        		    .addValue("pwd",user.getPwd())
+	        		    .addValue("username",user.getUsername())
 	        		    .addValue("roleId",user.getRoleId())
 	        		    .addValue("icon",user.getIcon())
 	        		    .addValue("activated",user.getActivated())
@@ -27,6 +28,7 @@ public class UserMapper implements RowMapper<User>  {
 		   user.setId(rs.getInt("id"));	    	
 		   user.setEmail(rs.getString("email"));
 		   user.setPwd(rs.getString("pwd"));
+		   user.setUsername(rs.getString("username"));
 		   user.setRoleId(rs.getInt("roleId"));
 		   user.setIcon(rs.getString("icon"));
 		   user.setActivated(rs.getBoolean("activated"));
