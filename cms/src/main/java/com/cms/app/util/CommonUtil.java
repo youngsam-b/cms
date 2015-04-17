@@ -126,5 +126,10 @@ public class CommonUtil {
 		 session.setAttribute(attr, o);
 	 }
 	 
+	 public static String getRemoteAddr(HttpServletRequest request){
+		 String ipAddress = request.getHeader("X-FORWARDED-FOR");  
+		 return ipAddress==null?request.getRemoteAddr():ipAddress;
+	 }
+	 
 	
 }

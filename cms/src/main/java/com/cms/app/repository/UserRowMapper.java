@@ -6,7 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import com.cms.app.model.User;
 
-public class UserMapper implements RowMapper<User>  {
+public class UserRowMapper implements RowMapper<User>  {
 
 	 public  static MapSqlParameterSource createUserParameterSource(User user) {
 	        return new MapSqlParameterSource()

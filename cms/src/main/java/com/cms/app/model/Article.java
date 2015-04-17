@@ -8,9 +8,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class Article {
 
-	
 	@NotNull
-	int categoryId;
+	int id;
 	@NotNull	
 	String title;
 	@NotNull	
@@ -18,25 +17,20 @@ public class Article {
 	@DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private Date lastupdate;
     @NotNull
-    boolean del;
+    int stat;
     @NotNull
     int userId;
     @NotNull
     String ip;
+    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
+    private Date schedule;
     
-    @NotNull
-	int id;
+	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public int getCategoryId() {
-		return categoryId;
-	}
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
 	}
 	public String getTitle() {
 		return title;
@@ -56,11 +50,11 @@ public class Article {
 	public void setLastupdate(Date lastupdate) {
 		this.lastupdate = lastupdate;
 	}
-	public boolean isDel() {
-		return del;
+	public int getStat() {
+		return stat;
 	}
-	public void setDel(boolean del) {
-		this.del = del;
+	public void setStat(int stat) {
+		this.stat = stat;
 	}
 	public int getUserId() {
 		return userId;
@@ -73,6 +67,12 @@ public class Article {
 	}
 	public void setIp(String ip) {
 		this.ip = ip;
+	}
+    public Date getSchedule() {
+		return schedule;
+	}
+	public void setSchedule(Date schedule) {
+		this.schedule = schedule;
 	}
 	
 	public Article(){

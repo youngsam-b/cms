@@ -42,11 +42,7 @@ public class UserController {
 						   @RequestParam("str") String str
 			               ) throws CustomException {
 		
-		
-		if(email==null || str==null)
-			return "/";
-		
-							
+								
 		if(cmsService.activate(email,str))
 			return "activate";
 		else
@@ -90,12 +86,11 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public ModelAndView getUpdate(HttpServletRequest req,ModelAndView mav,BindingResult result) {
-		
+	public ModelAndView getUpdate(HttpServletRequest req,ModelAndView mav,BindingResult result) {				
 
 		try{
 		User user=(User)req.getSession().getAttribute("user");
-		user=cmsService.getUserbyEmail(user.getEmail());
+		user=cmsService.getUserbyId(user.getId());
 		mav.addObject(user);
 		if(result.hasErrors())
 			mav.setViewName("update");
@@ -187,9 +182,7 @@ public class UserController {
 	
 	return "/";
 	}    
-	
-	
-	
+			
 	@RequestMapping(value = "/forget", method = RequestMethod.GET)
 	public String getForget() throws CustomException {
 		return "forget";
