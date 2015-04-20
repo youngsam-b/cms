@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,8 +35,6 @@ public class FileUploadController {
 	private String uploadpath;
 	@Value("${upload.iconpath}")
 	private String iconpath;
-	@Value("${upload.imagepath}")
-	private String imagepath;
 	@Value("${upload.sizelimit}")
 	private long sizelimit;
 
@@ -75,11 +74,12 @@ public class FileUploadController {
 	}	
 
 		
-	@RequestMapping(value = {"/imageupload"}, method = RequestMethod.POST)
+	@RequestMapping(value = {"/{category}/imageupload"}, method = RequestMethod.POST)
 	public 
 	@ResponseBody
 	String 
 	UploadImage(HttpServletRequest request,
+				@PathVariable String category,
 			    @RequestParam("CKEditorFuncNum") String CKEditorFuncNum,
 			    @RequestParam("CKEditor") String CKEditor,
 			    @RequestParam(value="upload")MultipartFile multipartFile
@@ -95,7 +95,7 @@ public class FileUploadController {
 	   
 		ServletContext servletContext=request.getSession().getServletContext();
 		StringBuilder sb= new StringBuilder(servletContext.getRealPath(uploadpath));
-		sb.append(File.separator).append(imagepath);
+		sb.append(File.separator).append(category);
 		String image="";
 		try{
 		image=CommonUtil.saveUploadedFile(sb.toString(),multipartFile,false);
@@ -107,7 +107,7 @@ public class FileUploadController {
 		
 		sb2.append("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction(")
 		   .append("'").append(CKEditorFuncNum).append("'").append(",")
-		   .append("'").append(uploadpath).append(imagepath).append("/").append(image).append("')")
+		   .append("'").append(uploadpath).append(category).append("/").append(image).append("')")
 		   .append("</script>");
 		   
 	

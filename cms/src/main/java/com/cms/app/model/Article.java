@@ -10,10 +10,12 @@ public class Article {
 
 	@NotNull
 	int id;
+	@NotNull
+	int categoryId;
 	@NotNull	
 	String title;
 	@NotNull	
-	String body;
+	String editor1;
 	@DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private Date lastupdate;
     @NotNull
@@ -32,17 +34,23 @@ public class Article {
 	public void setId(int id) {
 		this.id = id;
 	}
+	public int getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
 	public String getTitle() {
 		return title;
 	}
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getBody() {
-		return body;
+	public String getEditor1() {
+		return editor1;
 	}
-	public void setBody(String body) {
-		this.body = body;
+	public void setEditor1(String body) {
+		this.editor1 = body;
 	}
 	public Date getLastupdate() {
 		return lastupdate;

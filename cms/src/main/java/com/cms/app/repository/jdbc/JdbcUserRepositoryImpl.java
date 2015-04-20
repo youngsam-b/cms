@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import com.cms.app.model.User;
 import com.cms.app.repository.UserRepository;
-import com.cms.app.repository.UserRowMapper;
 
 @Repository
 public class JdbcUserRepositoryImpl implements UserRepository{

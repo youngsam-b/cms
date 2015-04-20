@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Path;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.Cookie;
@@ -56,14 +57,16 @@ public class CommonUtil {
 			        sb.toString()
 				   	);
 		   	
-		   
-   if (!file.exists())  
+	String str=file.getParent();
+	File dir=new File(str);
+	if(!dir.exists())
+		dir.mkdir();
+   
+   if (!file.exists())  {	   	
 	    file.createNewFile();
+   }
 	
- 
-		 
-  
-	outputStream = new FileOutputStream(file);  
+   	outputStream = new FileOutputStream(file);  
 	int read = 0;  
 	bytes = new byte[1024];  
 		  

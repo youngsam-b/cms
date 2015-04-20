@@ -1,4 +1,4 @@
-package com.cms.app.repository;
+package com.cms.app.repository.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

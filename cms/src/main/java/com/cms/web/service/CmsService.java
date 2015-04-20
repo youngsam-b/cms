@@ -1,5 +1,7 @@
 package com.cms.web.service;
 
+import java.util.List;
+
 import com.cms.app.model.Article;
 import com.cms.app.model.User;
 
@@ -14,8 +16,9 @@ public interface CmsService {
 	User getUserbyEmail(String email);
 	User getUserbyId(int id);
 	
-	boolean write(String category,Article article);
-	boolean update(String category,Article article);
-	boolean delete(String category,int no);
-	Article  getArticle(String category,int id);
+	boolean write(Article article);
+	boolean update(Article article);
+	boolean delete(int no);
+	Article  getArticle(int id);
+	List<Article>  getArticleList(String category,int pageNo);
 }

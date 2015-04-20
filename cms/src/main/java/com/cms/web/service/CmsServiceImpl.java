@@ -1,6 +1,9 @@
 package com.cms.web.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.cms.app.model.Article;
@@ -13,9 +16,10 @@ public class CmsServiceImpl implements CmsService {
 
 	@Autowired
 	UserRepository ur;
+	
 	@Autowired
 	ArticleRepository ar;
-
+	
 	@Override
 	public boolean register(User user) {
 		return ur.register(user)>1;		
@@ -52,23 +56,29 @@ public class CmsServiceImpl implements CmsService {
 	}
 
 	@Override
-	public boolean write(String category,Article article) {
-		return ar.write(category,article)>1;
+	public boolean write(Article article) {
+		return ar.write(article)>1;
 	}
 
 	@Override
-	public boolean update(String category,Article article) {
-		return ar.update(category,article)>1;
+	public boolean update(Article article) {
+		return ar.update(article)==1;
 	}
 
 	@Override
-	public boolean delete(String category,int no) {
-		return ar.delete(category,no)==1;
+	public boolean delete(int id) {
+			return ar.delete(id)==1;
 	}
 
 	@Override
-	public Article getArticle(String category, int id) {
-		return ar.getArticle(category, id);
+	public Article getArticle(int id) {
+		return ar.getArticle(id);
+	}
+
+	@Override
+	public List<Article> getArticleList(String category, int pageNo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
