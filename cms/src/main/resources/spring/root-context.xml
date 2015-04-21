@@ -22,6 +22,10 @@
 	<!-- import database setting -->
     <import resource="classpath:db/datasource-config.xml"/>
 
+	<!--  application properties -->
+    <context:property-placeholder location="classpath*:config/config.properties" ignore-unresolvable="true" />
+    <!--//  application properties -->
+
 	<!--Custom Exception Hanlder -->
 	    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
@@ -39,6 +43,16 @@
     <!-- one of the properties available; the maximum file size in bytes -->
     <property name="maxUploadSize" value="1000000"/>
 	</bean>
-    <!-- // multipartfile upload -->         
-    
+    <!-- // multipartfile upload -->
+     
+	<!-- tiles configurer -->
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">	   
+		<property name="definitions">
+	            <list>
+	            	<value >classpath:tiles/layout.xml</value>
+	            </list>
+	      </property>
+	</bean>   
+    <!-- // tiles configurer -->             
+  
 </beans>

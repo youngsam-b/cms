@@ -20,5 +20,5 @@ public interface CmsService {
 	boolean update(Article article);
 	boolean delete(int no);
 	Article  getArticle(int id);
-	List<Article>  getArticleList(String category,int pageNo);
+	List<Article>  getArticleList(int userId,int pageNo);
 }

@@ -35,6 +35,8 @@ public class FileUploadController {
 	private String uploadpath;
 	@Value("${upload.iconpath}")
 	private String iconpath;
+	@Value("${upload.imagepath}")
+	private String imagepath;
 	@Value("${upload.sizelimit}")
 	private long sizelimit;
 
@@ -74,20 +76,18 @@ public class FileUploadController {
 	}	
 
 		
-	@RequestMapping(value = {"/{category}/imageupload"}, method = RequestMethod.POST)
+	@RequestMapping(value = {"/imageupload"}, method = RequestMethod.POST)
 	public 
 	@ResponseBody
 	String 
 	UploadImage(HttpServletRequest request,
-				@PathVariable String category,
 			    @RequestParam("CKEditorFuncNum") String CKEditorFuncNum,
 			    @RequestParam("CKEditor") String CKEditor,
 			    @RequestParam(value="upload")MultipartFile multipartFile
 			    ){
 		
 		
-	   if(multipartFile.getSize()>sizelimit)
-	   		
+	   if(multipartFile.getSize()>sizelimit)	   		
 		   return "<script>window.parent.CKEDITOR.tools.callFunction(0,null,'fize size limit 1MB')</script>";
 	   
 	   if(!ImageUtil.isImageContent(multipartFile))
@@ -95,7 +95,7 @@ public class FileUploadController {
 	   
 		ServletContext servletContext=request.getSession().getServletContext();
 		StringBuilder sb= new StringBuilder(servletContext.getRealPath(uploadpath));
-		sb.append(File.separator).append(category);
+		sb.append(File.separator).append(imagepath);
 		String image="";
 		try{
 		image=CommonUtil.saveUploadedFile(sb.toString(),multipartFile,false);
@@ -107,7 +107,7 @@ public class FileUploadController {
 		
 		sb2.append("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction(")
 		   .append("'").append(CKEditorFuncNum).append("'").append(",")
-		   .append("'").append(uploadpath).append(category).append("/").append(image).append("')")
+		   .append("'").append(uploadpath).append(imagepath).append("/").append(image).append("')")
 		   .append("</script>");
 		   
 	

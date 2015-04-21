@@ -76,9 +76,9 @@ public class CmsServiceImpl implements CmsService {
 	}
 
 	@Override
-	public List<Article> getArticleList(String category, int pageNo) {
+	public List<Article> getArticleList(int userId, int pageNo) {
 		// TODO Auto-generated method stub
-		return null;
+		return ar.getArticleList(userId, pageNo);
 	}
 	
 	
