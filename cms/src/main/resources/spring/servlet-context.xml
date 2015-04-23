@@ -24,4 +24,13 @@
     <context:property-placeholder location="classpath*:config/config.properties" ignore-unresolvable="true" />
     <!--//  application properties -->
     
+    <!--  to display category in treeview -->
+	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="exposedContextBeanNames">
+	 		<beans:list>
+	  			<beans:value>com.cms.app.util.CategoryUtil</beans:value>
+	 		</beans:list>
+	 	</beans:property>
+	 </beans:bean> 
+	 <!--//  to display category in treeview -->
 </beans:beans>

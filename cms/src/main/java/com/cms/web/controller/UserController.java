@@ -33,8 +33,11 @@ public class UserController {
 		
 	
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String getRegister(@ModelAttribute User user)  {
-		return "register";
+	public ModelAndView getRegister(@ModelAttribute User user,
+									ModelAndView mav)  {
+		mav.addObject("random",RandomStringUtils.randomAlphanumeric(10));
+		mav.setViewName("reigster");
+		return mav;
 	}
 		
 	@RequestMapping(value = "/activate", method = RequestMethod.GET)
